@@ -50,6 +50,7 @@ namespace ApiUdemy.Controllers
 
             return new CreatedAtRouteResult("ObterProduto", new { id = produto.ProdutoId }, produto);
         }
+
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Produto produto)
         {
@@ -63,5 +64,22 @@ namespace ApiUdemy.Controllers
 
             return Ok(produto);
         }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+            //var produto = _context.Produtos.Find(id);
+
+            if(produto is null)
+            {
+                return NotFound("Produto não localizado...");
+            }
+            _context.Produtos.Remove(produto);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
     }
 }
