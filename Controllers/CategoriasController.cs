@@ -62,5 +62,20 @@ namespace ApiUdemy.Controllers
         }
 
 
+        [HttpDelete("{id:int}")]
+        public ActionResult<Categoria> Delete(int id)
+        {
+            var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+
+            if (categoria == null)
+            {
+                return NotFound("Categoria não encontrada...");
+            }
+            _context.Categorias.Remove(categoria);
+            _context.SaveChanges();
+            return Ok(categoria);
+        }
+
+
     }
 }
