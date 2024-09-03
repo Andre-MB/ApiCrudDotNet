@@ -17,9 +17,15 @@ namespace ApiUdemy.Controllers
             _context = context;
         }
 
+        [HttpGet("produtos")]
+        public ActionResult<IEnumerable<Categoria>> Get()
+        {
+            return _context.Categorias.Include(p=> p.Id).ToList();
+        }
+
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> Get() 
+        public ActionResult<IEnumerable<Categoria>> Get()
         {
             return _context.Categorias.ToList();
         }
