@@ -1,0 +1,50 @@
+﻿using ApiUdemy.Context;
+using ApiUdemy.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ApiUdemy.Controllers
+{
+    [Route("[controller]")]
+    [ApiController]
+    public class CategoriasController : ControllerBase
+    {
+        private readonly ApiDbContext _context;
+
+        public CategoriasController(ApiDbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Categoria>> Get() 
+        {
+            return _context.Categorias.ToList();
+        }
+
+        [HttpGet("{id:int}", Name = "ObterCategoria")]
+        public ActionResult<Categoria> Get(int id)
+        {
+            var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+
+            if (categoria == null)
+            {
+                return NotFound("Categoria não encontrada...");
+            }
+            return Ok(categoria);
+        }
+
+        [HttpPost]
+        public ActionResult Post(Categoria categoria)
+        {
+            if (categoria == null) {  return BadRequest(); }
+
+            _context.Categorias.Add(categoria);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("ObterCategoria",
+                new { id = categoria.Id }, categoria);
+        }
+
+    }
+}
