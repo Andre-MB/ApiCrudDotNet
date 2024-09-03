@@ -111,7 +111,7 @@
   },
   {
     "ContainingType": "ApiUdemy.Controllers.CategoriasController",
-    "Method": "GetCateriasProdutos",
+    "Method": "GetCategoriasProdutos",
     "RelativePath": "Categorias/produtos",
     "HttpMethod": "GET",
     "IsController": true,
