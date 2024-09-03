@@ -52,7 +52,7 @@ namespace ApiUdemy.Controllers
 
                 if (categoria == null)
                 {
-                    return NotFound("Categoria não encontrada...");
+                    return NotFound("Categoria com id={id} não encontrada...");
                 }
                 return Ok(categoria);
             }
@@ -67,7 +67,7 @@ namespace ApiUdemy.Controllers
         [HttpPost]
         public ActionResult Post(Categoria categoria)
         {
-            if (categoria == null) {  return BadRequest(); }
+            if (categoria == null) {  return BadRequest("Dados invalidos"); }
 
             _context.Categorias.Add(categoria);
             _context.SaveChanges();
@@ -96,7 +96,7 @@ namespace ApiUdemy.Controllers
 
             if (categoria == null)
             {
-                return NotFound("Categoria não encontrada...");
+                return NotFound("Categoria com id={id} não encontrada...");
             }
             _context.Categorias.Remove(categoria);
             _context.SaveChanges();
