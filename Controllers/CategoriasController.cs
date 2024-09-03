@@ -2,6 +2,7 @@
 using ApiUdemy.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiUdemy.Controllers
 {
@@ -16,11 +17,13 @@ namespace ApiUdemy.Controllers
             _context = context;
         }
 
+
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get() 
         {
             return _context.Categorias.ToList();
         }
+
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> Get(int id)
@@ -45,6 +48,19 @@ namespace ApiUdemy.Controllers
             return new CreatedAtRouteResult("ObterCategoria",
                 new { id = categoria.Id }, categoria);
         }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Categoria categoria)
+        {
+            if (id != categoria.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(categoria).State = EntityState.Modified;
+            _context.SaveChanges();
+            return Ok(categoria);
+        }
+
 
     }
 }
