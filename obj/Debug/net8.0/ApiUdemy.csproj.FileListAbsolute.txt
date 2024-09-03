@@ -103,3 +103,4 @@ C:\Users\André\Desktop\dotNet\ApiUdemy\ApiUdemy\obj\Debug\net8.0\ApiUdemy.pdb
 C:\Users\André\Desktop\dotNet\ApiUdemy\ApiUdemy\obj\Debug\net8.0\ApiUdemy.genruntimeconfig.cache
 C:\Users\André\Desktop\dotNet\ApiUdemy\ApiUdemy\obj\Debug\net8.0\ref\ApiUdemy.dll
 C:\Users\André\Desktop\dotNet\ApiUdemy\ApiUdemy\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\André\Desktop\dotNet\ApiUdemy\ApiUdemy\obj\Debug\net8.0\ApiUdemy.sourcelink.json

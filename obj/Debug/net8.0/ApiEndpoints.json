@@ -21,6 +21,22 @@
   },
   {
     "ContainingType": "ApiUdemy.Controllers.ProdutosController",
+    "Method": "Post",
+    "RelativePath": "Produtos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "produto",
+        "Type": "ApiUdemy.Models.Produto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiUdemy.Controllers.ProdutosController",
     "Method": "Get",
     "RelativePath": "Produtos/{id}",
     "HttpMethod": "GET",
@@ -43,6 +59,7 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "ObterProduto"
   }
 ]
