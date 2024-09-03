@@ -61,5 +61,26 @@
       }
     ],
     "EndpointName": "ObterProduto"
+  },
+  {
+    "ContainingType": "ApiUdemy.Controllers.ProdutosController",
+    "Method": "Put",
+    "RelativePath": "Produtos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "produto",
+        "Type": "ApiUdemy.Models.Produto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
