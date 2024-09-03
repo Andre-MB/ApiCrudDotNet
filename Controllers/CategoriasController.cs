@@ -46,13 +46,22 @@ namespace ApiUdemy.Controllers
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> Get(int id)
         {
-            var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
-
-            if (categoria == null)
+            try
             {
-                return NotFound("Categoria não encontrada...");
+                var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+
+                if (categoria == null)
+                {
+                    return NotFound("Categoria não encontrada...");
+                }
+                return Ok(categoria);
             }
-            return Ok(categoria);
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ocorreu um problema ao tratar a sua solicitação");
+            }
         }
 
         [HttpPost]
