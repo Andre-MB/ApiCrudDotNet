@@ -28,8 +28,18 @@ namespace ApiUdemy.Controllers
             return produtos;
         }
 
+        [HttpGet("primeiro")]
+        [HttpGet("/primeiro")]
+        // [HttpGet("{valor:alpha:length(5)}")]
+        public ActionResult<Produto> Get2(string valor)
+        {
+            var teste = valor;
+            return _context.Produtos.FirstOrDefault();
+        }
+         
 
-        [HttpGet("{id:int:min(1}", Name="ObterProduto")]
+
+        [HttpGet("{id:int:min(1)}", Name="ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);

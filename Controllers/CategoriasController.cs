@@ -1,5 +1,6 @@
 ﻿using ApiUdemy.Context;
 using ApiUdemy.Models;
+using ApiUdemy.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,35 +11,21 @@ namespace ApiUdemy.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly ICategoriaRepository _repository;
 
-        public CategoriasController(ApiDbContext context)
+        public CategoriasController(ICategoriaRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        [HttpGet("produtos")]
-        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
-        {
-            //return _context.Categorias.Include(p=> p.Produtos).ToList();
-            return _context.Categorias.Include(p=> p.Produtos).Where(c=>c.Id <=5).ToList();
-        }
+
 
 
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            try
-            {
-                throw new DataMisalignedException();
-                //return _context.Categorias.AsNoTracking().ToList();
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um problema ao tratar a sua solicitação");
-            }
+            var categorias = _repository.GetCategorias();
+            return Ok(categorias);
 
         }
 
@@ -48,7 +35,7 @@ namespace ApiUdemy.Controllers
         {
             try
             {
-                var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+                var categoria = _repository.GetCategoria(id);   
 
                 if (categoria == null)
                 {
@@ -69,11 +56,10 @@ namespace ApiUdemy.Controllers
         {
             if (categoria == null) {  return BadRequest("Dados invalidos"); }
 
-            _context.Categorias.Add(categoria);
-            _context.SaveChanges();
+            var categoriaCriada = _repository.Create(categoria);
 
             return new CreatedAtRouteResult("ObterCategoria",
-                new { id = categoria.Id }, categoria);
+                new { id = categoriaCriada.Id }, categoriaCriada);
         }
 
         [HttpPut("{id:int}")]
@@ -83,24 +69,22 @@ namespace ApiUdemy.Controllers
             {
                 return BadRequest();
             }
-            _context.Entry(categoria).State = EntityState.Modified;
-            _context.SaveChanges();
+            _repository.Update(categoria); 
             return Ok(categoria);
         }
 
 
         [HttpDelete("{id:int}")]
-        public ActionResult<Categoria> Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+            var categoria = _repository.GetCategoria(id);
 
             if (categoria == null)
             {
                 return NotFound("Categoria com id={id} não encontrada...");
             }
-            _context.Categorias.Remove(categoria);
-            _context.SaveChanges();
-            return Ok(categoria);
+            var categoriaExcluida = _repository.Delete(id);
+            return Ok(categoriaExcluida);
         }
 
 
