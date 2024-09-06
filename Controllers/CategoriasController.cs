@@ -45,7 +45,7 @@ namespace ApiUdemy.Controllers
             }
             catch (Exception)
             {
-
+                   
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Ocorreu um problema ao tratar a sua solicitação");
             }
