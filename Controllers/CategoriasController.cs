@@ -19,8 +19,6 @@ namespace ApiUdemy.Controllers
         }
 
 
-
-
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {

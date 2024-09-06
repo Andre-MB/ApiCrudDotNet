@@ -1,5 +1,6 @@
 ﻿using ApiUdemy.Context;
 using ApiUdemy.Models;
+using ApiUdemy.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,45 +11,45 @@ namespace ApiUdemy.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly IProdutoRepository _repository;
 
-        public ProdutosController(ApiDbContext context)
+        public ProdutosController(IProdutoRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            var produtos = _context.Produtos.ToList();
+            var produtos = _repository.GetProdutos().ToList();
             if(produtos is null)
             {
                 return NotFound("Produtos não encontrados...");
             }
-            return produtos;
+            return Ok(produtos);
         }
 
-        [HttpGet("primeiro")]
-        [HttpGet("/primeiro")]
+        //[HttpGet("primeiro")]
+        //[HttpGet("/primeiro")]
         // [HttpGet("{valor:alpha:length(5)}")]
-        public ActionResult<Produto> Get2(string valor)
-        {
-            var teste = valor;
-            return _context.Produtos.FirstOrDefault();
-        }
+        //public ActionResult<Produto> Get2(string valor)
+        //{
+        //    var teste = valor;
+        //    return _context.Produtos.FirstOrDefault();
+        //}
          
 
 
-        [HttpGet("{id:int:min(1)}", Name="ObterProduto")]
+        [HttpGet("{id}", Name="ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
-            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+            var produto = _repository.GetProduto(id);
 
             if (produto == null)
             {
                 return NotFound("Produto não encontrado");
             }
-            return produto;
+            return Ok(produto);
         }
 
         [HttpPost]
@@ -56,10 +57,9 @@ namespace ApiUdemy.Controllers
         {
             if (produto is null) return BadRequest();
 
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
+            var novoProduto = _repository.Create(produto);
 
-            return new CreatedAtRouteResult("ObterProduto", new { id = produto.ProdutoId }, produto);
+            return new CreatedAtRouteResult("ObterProduto", new { id = novoProduto.ProdutoId }, novoProduto);
         }
 
         [HttpPut("{id:int}")]
@@ -67,29 +67,36 @@ namespace ApiUdemy.Controllers
         {
             if(id != produto.ProdutoId)
             {
-                return BadRequest();
+                return BadRequest(); //400
             }
 
-            _context.Entry(produto).State = EntityState.Modified;
-            _context.SaveChanges();
+            bool atualizado = _repository.Update(produto);
 
-            return Ok(produto);
+            if (atualizado)
+            {
+                return Ok(produto);
+            }
+            else
+            {
+                return StatusCode(500, $"Falha ao atualizar o produdo de id = {id}");
+            }
+
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
-            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-            //var produto = _context.Produtos.Find(id);
 
-            if(produto is null)
+            bool atualizado = _repository.Delete(id);
+
+            if (atualizado)
             {
-                return NotFound("Produto não localizado...");
+                return Ok($"Produto de id={id} foi excluido");
             }
-            _context.Produtos.Remove(produto);
-            _context.SaveChanges();
-
-            return Ok();
+            else
+            {
+                return StatusCode(500, $"Falha ao excluir o produto de id={id}");
+            }
         }
 
     }
