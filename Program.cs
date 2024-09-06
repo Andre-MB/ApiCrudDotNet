@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
  
 // Faz ingestão do repository no construtor
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 var app = builder.Build();
 
