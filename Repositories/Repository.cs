@@ -14,7 +14,7 @@ public class Repository<T>: IRepository<T> where T : class
 
     public IEnumerable<T> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.Set<T>().ToList();
     }
 
     public T? Get(Expression<Func<T, bool>> predicate)
