@@ -38,7 +38,9 @@ public class Repository<T>: IRepository<T> where T : class
 
     public T Delete(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Remove(entity);
+        _context.SaveChanges();
+        return entity;
     }
 
 }
