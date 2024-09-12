@@ -19,7 +19,7 @@ public class Repository<T>: IRepository<T> where T : class
 
     public T? Get(Expression<Func<T, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return _context.Set<T>().FirstOrDefault(predicate);
     }
 
     public T Create(T entity)
