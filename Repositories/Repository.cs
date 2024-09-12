@@ -32,6 +32,7 @@ public class Repository<T>: IRepository<T> where T : class
     public T Update(T entity)
     {
         _context.Set<T>().Update(entity);
+        // _context.Entry(entity).State = EntityState.Modified;
         _context.SaveChanges();
         return entity;
     }
