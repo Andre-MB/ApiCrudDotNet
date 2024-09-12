@@ -24,7 +24,9 @@ public class Repository<T>: IRepository<T> where T : class
 
     public T Create(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Add(entity);
+        _context.SaveChanges();
+        return entity;
     }
 
     public T Update(T entity)
