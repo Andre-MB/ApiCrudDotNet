@@ -11,9 +11,9 @@ namespace ApiUdemy.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        private readonly ICategoriaRepository _repository;
+        private readonly IRepository<Categoria> _repository;
 
-        public CategoriasController(ICategoriaRepository repository)
+        public CategoriasController(IRepository<Categoria> repository)
         {
             _repository = repository;
         }
@@ -22,7 +22,7 @@ namespace ApiUdemy.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            var categorias = _repository.GetCategorias();
+            var categorias = _repository.GetAll();
             return Ok(categorias);
 
         }
@@ -33,7 +33,7 @@ namespace ApiUdemy.Controllers
         {
             try
             {
-                var categoria = _repository.GetCategoria(id);   
+                var categoria = _repository.Get( c => c.Id == id );   
 
                 if (categoria == null)
                 {
@@ -75,13 +75,13 @@ namespace ApiUdemy.Controllers
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
-            var categoria = _repository.GetCategoria(id);
+            var categoria = _repository.Get(c=>c.Id ==id);
 
             if (categoria == null)
             {
                 return NotFound("Categoria com id={id} não encontrada...");
             }
-            var categoriaExcluida = _repository.Delete(id);
+            var categoriaExcluida = _repository.Delete(categoria);
             return Ok(categoriaExcluida);
         }
 
