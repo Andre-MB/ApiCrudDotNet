@@ -101,32 +101,6 @@
   },
   {
     "ContainingType": "ApiUdemy.Controllers.ProdutosController",
-    "Method": "Get2",
-    "RelativePath": "primeiro",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "valor",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "ApiUdemy.Models.Produto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "ApiUdemy.Controllers.ProdutosController",
     "Method": "Get",
     "RelativePath": "Produtos",
     "HttpMethod": "GET",
@@ -227,21 +201,21 @@
   },
   {
     "ContainingType": "ApiUdemy.Controllers.ProdutosController",
-    "Method": "Get2",
-    "RelativePath": "Produtos/primeiro",
+    "Method": "GetProdutosCategoria",
+    "RelativePath": "Produtos/produtos/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "valor",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ApiUdemy.Models.Produto",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ApiUdemy.Models.Produto, ApiUdemy, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

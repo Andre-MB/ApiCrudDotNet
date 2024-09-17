@@ -5,11 +5,11 @@ namespace ApiUdemy.Repositories;
 
 public class ProdutoRepository : Repository<Produto>, IProdutoRepository
 {
-    private readonly ApiDbContext _context;
+    
 
-    public ProdutoRepository(ApiDbContext context) 
+    public ProdutoRepository(ApiDbContext context) : base(context)
     {
-        _context = context;
+
     }
 
     public IEnumerable<Produto> GetProdutosPorCategoria(int id)

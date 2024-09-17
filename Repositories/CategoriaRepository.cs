@@ -1,13 +1,12 @@
 ﻿using ApiUdemy.Context;
 using ApiUdemy.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace ApiUdemy.Repositories;
 
 //ICategoriaRepository
 public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
 {
-    private readonly ApiDbContext _context;
+    //private readonly ApiDbContext _context;
 
     public CategoriaRepository(ApiDbContext context) : base(context)
     {
