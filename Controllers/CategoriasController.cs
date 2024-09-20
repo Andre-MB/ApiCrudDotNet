@@ -1,4 +1,5 @@
 ﻿using ApiUdemy.Context;
+using ApiUdemy.DTOs;
 using ApiUdemy.Models;
 using ApiUdemy.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +23,7 @@ namespace ApiUdemy.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> Get()
+        public ActionResult<IEnumerable<CategoriaDTO>> Get()
         {
             // var categorias = _repository.GetAll();
             var categorias = _uof.CategoriaRepository.GetAll();
@@ -32,7 +33,7 @@ namespace ApiUdemy.Controllers
 
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
-        public ActionResult<Categoria> Get(int id)
+        public ActionResult<CategoriaDTO> Get(int id)
         {
             try
             {
@@ -42,7 +43,15 @@ namespace ApiUdemy.Controllers
                 {
                     return NotFound("Categoria com id={id} não encontrada...");
                 }
-                return Ok(categoria);
+
+                var categoriaDto = new CategoriaDTO()
+                {
+                    Id = categoria.Id,
+                    Nome = categoria.Nome,
+                    ImagemUrl = categoria.ImagemUrl,
+                };
+
+                return Ok(categoriaDto);
             }
             catch (Exception)
             {
@@ -53,32 +62,62 @@ namespace ApiUdemy.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(Categoria categoria)
+        public ActionResult<CategoriaDTO> Post(CategoriaDTO categoriaDto)
         {
-            if (categoria == null) {  return BadRequest("Dados invalidos"); }
+            if (categoriaDto == null) {  return BadRequest("Dados invalidos"); }
+
+            var categoria = new Categoria()
+            {
+                Id = categoriaDto.Id,
+                Nome = categoriaDto.Nome,
+                ImagemUrl = categoriaDto.ImagemUrl,
+            };
 
             var categoriaCriada = _uof.CategoriaRepository.Create(categoria);
             _uof.Commit();
 
+            var novacategoriaDto = new CategoriaDTO()
+            {
+                Id = categoriaCriada.Id,
+                Nome = categoriaCriada.Nome,
+                ImagemUrl = categoriaCriada.ImagemUrl,
+            };
+
             return new CreatedAtRouteResult("ObterCategoria",
-                new { id = categoriaCriada.Id }, categoriaCriada);
+                new { id = novacategoriaDto.Id }, novacategoriaDto);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult Put(int id, Categoria categoria)
+        public ActionResult<CategoriaDTO> Put(int id, CategoriaDTO categoriaDto)
         {
-            if (id != categoria.Id)
+            if (id != categoriaDto.Id)
             {
                 return BadRequest();
             }
-            _uof.CategoriaRepository.Update(categoria);
+
+            var categoria = new Categoria()
+            {
+                Id = categoriaDto.Id,
+                Nome = categoriaDto.Nome,
+                ImagemUrl = categoriaDto.ImagemUrl,
+            };
+
+            var categoriaAtualizada = _uof.CategoriaRepository.Update(categoria);
             _uof.Commit();
-            return Ok(categoria);
+
+            var categoriaAtualizadaDto = new CategoriaDTO()
+            {
+                Id = categoriaAtualizada.Id,
+                Nome = categoriaAtualizada.Nome,
+                ImagemUrl = categoriaAtualizada.ImagemUrl,
+            };
+
+            return Ok(categoriaAtualizadaDto);
         }
 
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        public ActionResult<CategoriaDTO> Delete(int id)
         {
             var categoria = _uof.CategoriaRepository.Get(c=>c.Id ==id);
 
