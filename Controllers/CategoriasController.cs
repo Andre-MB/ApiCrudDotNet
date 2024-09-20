@@ -24,6 +24,7 @@ namespace ApiUdemy.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
+            // var categorias = _repository.GetAll();
             var categorias = _uof.CategoriaRepository.GetAll();
             return Ok(categorias);
 
@@ -87,6 +88,7 @@ namespace ApiUdemy.Controllers
             }
             var categoriaExcluida = _uof.CategoriaRepository.Delete(categoria);
             _uof.Commit();
+            // se usar o repository direto ele já tinha o saveChanges não precisaria do commit()
             return Ok(categoriaExcluida);
         }
 
