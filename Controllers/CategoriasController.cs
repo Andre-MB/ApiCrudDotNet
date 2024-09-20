@@ -27,7 +27,24 @@ namespace ApiUdemy.Controllers
         {
             // var categorias = _repository.GetAll();
             var categorias = _uof.CategoriaRepository.GetAll();
-            return Ok(categorias);
+
+            if (categorias is null) return NotFound("Não existem categorias...");
+
+            var categoriasDto = new List<CategoriaDTO>();
+
+            foreach (var categoria in categorias)
+            {
+                var categoriaDto = new CategoriaDTO
+                {
+                    Id = categoria.Id,
+                    Nome = categoria.Nome,
+                    ImagemUrl = categoria.ImagemUrl,
+                };
+
+                categoriasDto.Add(categoriaDto);
+            }
+
+            return Ok(categoriasDto);
 
         }
 
@@ -92,7 +109,7 @@ namespace ApiUdemy.Controllers
         {
             if (id != categoriaDto.Id)
             {
-                return BadRequest();
+                return BadRequest("Dados invalidos");
             }
 
             var categoria = new Categoria()
@@ -125,10 +142,19 @@ namespace ApiUdemy.Controllers
             {
                 return NotFound("Categoria com id={id} não encontrada...");
             }
+
             var categoriaExcluida = _uof.CategoriaRepository.Delete(categoria);
             _uof.Commit();
+
+            var categoriaExcluidaDto = new CategoriaDTO()
+            {
+                Id = categoriaExcluida.Id,
+                Nome = categoriaExcluida.Nome,
+                ImagemUrl = categoriaExcluida.ImagemUrl,
+            };
+
             // se usar o repository direto ele já tinha o saveChanges não precisaria do commit()
-            return Ok(categoriaExcluida);
+            return Ok(categoriaExcluidaDto);
         }
 
 
