@@ -33,4 +33,18 @@ public static class CategoriaDTOMappingExtensions
         };
     }
 
+    public static IEnumerable<CategoriaDTO> ToCategoriaDTOList(this IEnumerable<CategoriaDTO> categorias)
+    {
+        if (categorias is null || !categorias.Any())
+        {
+            return new List<CategoriaDTO>();
+        }
+
+        return categorias.Select(categorias => new CategoriaDTO
+        {
+            Id = categorias.Id,
+            Nome = categorias.Nome,
+            ImagemUrl= categorias.ImagemUrl
+        }).ToList();
+    }
 }
