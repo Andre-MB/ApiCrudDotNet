@@ -5,21 +5,20 @@ namespace ApiUdemy.DTOs.Mappings;
 public static class CategoriaDTOMappingExtensions
 {
 
-    public static CategoriaDTO? ToCategotiaDTO(this CategoriaDTO categoriaDTO)
+    public static CategoriaDTO? ToCategotiaDTO(this Categoria categoria)
     {
-        if (categoriaDTO == null)
+        if (categoria == null)
         {
             return null;
         }
 
         return new CategoriaDTO
         {
-            Id = categoriaDTO.Id,
-            Nome = categoriaDTO.Nome,
-            ImagemUrl = categoriaDTO.ImagemUrl,
+            Id = categoria.Id,
+            Nome = categoria.Nome,
+            ImagemUrl = categoria.ImagemUrl,
         };
     }
-
 
     public static Categoria? ToCategoria(this CategoriaDTO categoriaDTO)
     {
@@ -33,7 +32,7 @@ public static class CategoriaDTOMappingExtensions
         };
     }
 
-    public static IEnumerable<CategoriaDTO> ToCategoriaDTOList(this IEnumerable<CategoriaDTO> categorias)
+    public static IEnumerable<CategoriaDTO> ToCategoriaDTOList(this IEnumerable<Categoria> categorias)
     {
         if (categorias is null || !categorias.Any())
         {

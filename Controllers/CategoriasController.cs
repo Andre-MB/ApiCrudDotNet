@@ -1,5 +1,6 @@
 ﻿using ApiUdemy.Context;
 using ApiUdemy.DTOs;
+using ApiUdemy.DTOs.Mappings;
 using ApiUdemy.Models;
 using ApiUdemy.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -29,19 +30,21 @@ namespace ApiUdemy.Controllers
 
             if (categorias is null) return NotFound("Não existem categorias...");
 
-            var categoriasDto = new List<CategoriaDTO>();
+            //var categoriasDto = new List<CategoriaDTO>();
 
-            foreach (var categoria in categorias)
-            {
-                var categoriaDto = new CategoriaDTO
-                {
-                    Id = categoria.Id,
-                    Nome = categoria.Nome,
-                    ImagemUrl = categoria.ImagemUrl,
-                };
+            //foreach (var categoria in categorias)
+            //{
+            //    var categoriaDto = new CategoriaDTO
+            //    {
+            //        Id = categoria.Id,
+            //        Nome = categoria.Nome,
+            //        ImagemUrl = categoria.ImagemUrl,
+            //    };
 
-                categoriasDto.Add(categoriaDto);
-            }
+            //    categoriasDto.Add(categoriaDto);
+            //}
+
+            var categoriasDto = categorias.ToCategoriaDTOList();
 
             return Ok(categoriasDto);
 
@@ -57,15 +60,17 @@ namespace ApiUdemy.Controllers
 
                 if (categoria == null)
                 {
-                    return NotFound("Categoria com id={id} não encontrada...");
+                    return NotFound($"Categoria com id={id} não encontrada...");
                 }
 
-                var categoriaDto = new CategoriaDTO()
-                {
-                    Id = categoria.Id,
-                    Nome = categoria.Nome,
-                    ImagemUrl = categoria.ImagemUrl,
-                };
+                //var categoriaDto = new CategoriaDTO()
+                //{
+                //    Id = categoria.Id,
+                //    Nome = categoria.Nome,
+                //    ImagemUrl = categoria.ImagemUrl,
+                //};
+
+                var categoriaDto = categoria.ToCategotiaDTO();
 
                 return Ok(categoriaDto);
             }
@@ -82,22 +87,25 @@ namespace ApiUdemy.Controllers
         {
             if (categoriaDto == null) {  return BadRequest("Dados invalidos"); }
 
-            var categoria = new Categoria()
-            {
-                Id = categoriaDto.Id,
-                Nome = categoriaDto.Nome,
-                ImagemUrl = categoriaDto.ImagemUrl,
-            };
+            //var categoria = new Categoria()
+            //{
+            //    Id = categoriaDto.Id,
+            //    Nome = categoriaDto.Nome,
+            //    ImagemUrl = categoriaDto.ImagemUrl,
+            //};
+            var categoria = categoriaDto.ToCategoria();
 
             var categoriaCriada = _uof.CategoriaRepository.Create(categoria);
             _uof.Commit();
 
-            var novacategoriaDto = new CategoriaDTO()
-            {
-                Id = categoriaCriada.Id,
-                Nome = categoriaCriada.Nome,
-                ImagemUrl = categoriaCriada.ImagemUrl,
-            };
+            //var novacategoriaDto = new CategoriaDTO()
+            //{
+            //    Id = categoriaCriada.Id,
+            //    Nome = categoriaCriada.Nome,
+            //    ImagemUrl = categoriaCriada.ImagemUrl,
+            //};
+
+            var novacategoriaDto = categoriaCriada.ToCategotiaDTO();
 
             return new CreatedAtRouteResult("ObterCategoria",
                 new { id = novacategoriaDto.Id }, novacategoriaDto);
@@ -111,22 +119,26 @@ namespace ApiUdemy.Controllers
                 return BadRequest("Dados invalidos");
             }
 
-            var categoria = new Categoria()
-            {
-                Id = categoriaDto.Id,
-                Nome = categoriaDto.Nome,
-                ImagemUrl = categoriaDto.ImagemUrl,
-            };
+            //var categoria = new Categoria()
+            // {
+            //     Id = categoriaDto.Id,
+            //     Nome = categoriaDto.Nome,
+            //     ImagemUrl = categoriaDto.ImagemUrl,
+            // }; 
+
+            var categoria = categoriaDto.ToCategoria();
 
             var categoriaAtualizada = _uof.CategoriaRepository.Update(categoria);
             _uof.Commit();
 
-            var categoriaAtualizadaDto = new CategoriaDTO()
-            {
-                Id = categoriaAtualizada.Id,
-                Nome = categoriaAtualizada.Nome,
-                ImagemUrl = categoriaAtualizada.ImagemUrl,
-            };
+            //var categoriaAtualizadaDto = new CategoriaDTO()
+            //{
+            //    Id = categoriaAtualizada.Id,
+            //    Nome = categoriaAtualizada.Nome,
+            //    ImagemUrl = categoriaAtualizada.ImagemUrl,
+            //};
+
+            var categoriaAtualizadaDto = categoriaAtualizada.ToCategotiaDTO();
 
             return Ok(categoriaAtualizadaDto);
         }
@@ -145,12 +157,14 @@ namespace ApiUdemy.Controllers
             var categoriaExcluida = _uof.CategoriaRepository.Delete(categoria);
             _uof.Commit();
 
-            var categoriaExcluidaDto = new CategoriaDTO()
-            {
-                Id = categoriaExcluida.Id,
-                Nome = categoriaExcluida.Nome,
-                ImagemUrl = categoriaExcluida.ImagemUrl,
-            };
+            //var categoriaExcluidaDto = new CategoriaDTO()
+            //{
+            //    Id = categoriaExcluida.Id,
+            //    Nome = categoriaExcluida.Nome,
+            //    ImagemUrl = categoriaExcluida.ImagemUrl,
+            //};
+
+            var categoriaExcluidaDto = categoriaExcluida.ToCategotiaDTO();
 
             // se usar o repository direto ele já tinha o saveChanges não precisaria do commit()
             return Ok(categoriaExcluidaDto);
