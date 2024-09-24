@@ -1,4 +1,6 @@
-﻿namespace ApiUdemy.DTOs.Mappings;
+﻿using ApiUdemy.Models;
+
+namespace ApiUdemy.DTOs.Mappings;
 
 public static class CategoriaDTOMappingExtensions
 {
@@ -18,5 +20,17 @@ public static class CategoriaDTOMappingExtensions
         };
     }
 
+
+    public static Categoria? ToCategoria(this CategoriaDTO categoriaDTO)
+    {
+        if (categoriaDTO is null) return null;
+
+        return new Categoria
+        {
+            Id = categoriaDTO.Id,
+            Nome = categoriaDTO.Nome,
+            ImagemUrl = categoriaDTO.ImagemUrl
+        };
+    }
 
 }
