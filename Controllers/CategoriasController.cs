@@ -17,7 +17,6 @@ namespace ApiUdemy.Controllers
 
         public CategoriasController( IUnitOfWork uof)
         {
-
             _uof = uof;
         }
 
