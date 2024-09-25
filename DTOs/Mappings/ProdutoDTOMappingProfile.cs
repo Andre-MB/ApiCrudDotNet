@@ -1,6 +1,13 @@
-﻿namespace ApiUdemy.DTOs.Mappings
+﻿using ApiUdemy.Models;
+using AutoMapper;
+
+namespace ApiUdemy.DTOs.Mappings;
+
+public class ProdutoDTOMappingProfile : Profile
 {
-    public class ProdutoDTOMappingProfile
+    public ProdutoDTOMappingProfile() 
     {
+            CreateMap<Produto,ProdutoDTO>().ReverseMap();
+            CreateMap<Categoria,CategoriaDTO>().ReverseMap();
     }
 }
