@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Q+EDDUHflAI=",
+  "dgSpecHash": "YZEqsvTQ80A=",
   "success": true,
   "projectFilePath": "C:\\Users\\André\\Desktop\\dotNet\\ApiUdemy\\ApiUdemy\\ApiUdemy.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\André\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\André\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\André\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.8\\microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "C:\\Users\\André\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
