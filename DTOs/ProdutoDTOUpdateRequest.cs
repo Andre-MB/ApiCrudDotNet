@@ -1,6 +1,5 @@
-﻿namespace ApiUdemy.DTOs
+﻿namespace ApiUdemy.DTOs;
+
+public class ProdutoDTOUpdateRequest
 {
-    public class ProdutoDTOUpdateRequest
-    {
-    }
 }
