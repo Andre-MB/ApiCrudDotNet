@@ -4,7 +4,7 @@ namespace ApiUdemy.DTOs;
 
 public class ProdutoDTOUpdateRequest : IValidatableObject
 {
-    [Range(0, 9999,ErrorMessage = "Estoque deve estar entre 1 e 9999")]
+    [Range(1, 9999,ErrorMessage = "Estoque deve estar entre 1 e 9999")]
     public float Estoque { get; set; }
     public DateTime DataCadastro { get; set; }
 
