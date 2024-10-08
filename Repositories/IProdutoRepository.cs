@@ -1,4 +1,5 @@
 ﻿using ApiUdemy.Models;
+using ApiUdemy.Pagination;
 
 namespace ApiUdemy.Repositories;
 
@@ -10,5 +11,6 @@ public interface IProdutoRepository : IRepository<Produto>
     //bool Update(Produto produto);
     //bool Delete(int id);
 
+    IEnumerable<Produto> GetProdutos(ProdutoParameters produtoParameters);
     IEnumerable<Produto> GetProdutosPorCategoria(int id);
 }
