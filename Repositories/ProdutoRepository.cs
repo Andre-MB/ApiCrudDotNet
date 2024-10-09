@@ -1,5 +1,6 @@
 ﻿using ApiUdemy.Context;
 using ApiUdemy.Models;
+using ApiUdemy.Pagination;
 
 namespace ApiUdemy.Repositories;
 
@@ -10,6 +11,14 @@ public class ProdutoRepository : Repository<Produto>, IProdutoRepository
     public ProdutoRepository(ApiDbContext context) : base(context)
     {
 
+    }
+
+    public IEnumerable<Produto> GetProdutos(ProdutoParameters produtoParameters)
+    {
+        return GetAll()
+            .OrderBy(p => p.Nome)
+            .Skip((produtoParameters.PageNumber - 1) * produtoParameters.PageSize)
+            .Take(produtoParameters.PageSize).ToList();
     }
 
     public IEnumerable<Produto> GetProdutosPorCategoria(int id)
