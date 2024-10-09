@@ -1,6 +1,7 @@
 ﻿using ApiUdemy.Context;
 using ApiUdemy.DTOs;
 using ApiUdemy.Models;
+using ApiUdemy.Pagination;
 using ApiUdemy.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -47,6 +48,17 @@ namespace ApiUdemy.Controllers
 
             return Ok(produtosDto);
         }
+
+        [HttpGet("pagination")]
+        public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] ProdutoParameters produtosParamers)
+        {
+            var produtos = _uof.ProdutoRepository.GetProdutos(produtosParamers);
+
+            var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
+
+            return Ok(produtosDto);
+        }
+
 
         [HttpGet]
         public ActionResult<IEnumerable<ProdutoDTO>> Get()
