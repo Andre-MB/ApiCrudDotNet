@@ -3,8 +3,9 @@
     "",
     "\\Controllers",
     "\\Models",
+    "\\Pagination",
     "\\Repositories"
   ],
-  "SelectedNode": "\\Repositories\\NewFolder",
+  "SelectedNode": "\\Pagination",
   "PreviewInSolutionExplorer": false
 }
