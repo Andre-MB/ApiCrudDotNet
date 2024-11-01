@@ -93,6 +93,7 @@ namespace ApiUdemy.Controllers
             //    Nome = categoriaDto.Nome,
             //    ImagemUrl = categoriaDto.ImagemUrl,
             //};
+
             var categoria = categoriaDto.ToCategoria();
 
             var categoriaCriada = _uof.CategoriaRepository.Create(categoria);

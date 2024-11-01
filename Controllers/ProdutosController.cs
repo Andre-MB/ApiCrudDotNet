@@ -75,7 +75,7 @@ namespace ApiUdemy.Controllers
                 produtos.HasPrevious,
             };
 
-            Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata);
+            Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
 
             var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
 
