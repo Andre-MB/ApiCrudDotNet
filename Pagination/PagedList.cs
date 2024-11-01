@@ -7,9 +7,9 @@ public class PagedList<T> : List<T> where T : class
     public int PageSize { get; private set; }
     public int TotalCount { get; private set; }
 
-    public bool HasPreciousss => CurrentPage > 1;
+    public bool HasPrevious => CurrentPage > 1;
 
-    public bool HasNex => CurrentPage < TotalPages;
+    public bool HasNext => CurrentPage < TotalPages;
 
     public PagedList(List<T> items, int count, int pageNumber, int pageSize)
     {

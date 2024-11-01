@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ApiUdemy.Controllers
 {
@@ -49,10 +50,32 @@ namespace ApiUdemy.Controllers
             return Ok(produtosDto);
         }
 
+        //[HttpGet("pagination")]
+        //public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] ProdutoParameters produtosParamers)
+        //{
+        //    var produtos = _uof.ProdutoRepository.GetProdutos(produtosParamers);
+
+        //    var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
+
+        //    return Ok(produtosDto);
+        //}
+
         [HttpGet("pagination")]
         public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] ProdutoParameters produtosParamers)
         {
             var produtos = _uof.ProdutoRepository.GetProdutos(produtosParamers);
+
+            var metadata = new
+            {
+                produtos.TotalCount,
+                produtos.PageSize,
+                produtos.CurrentPage,
+                produtos.TotalPages,
+                produtos.HasNext,
+                produtos.HasPrevious,
+            };
+
+            Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata);
 
             var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
 
