@@ -43,7 +43,7 @@ public static class CategoriaDTOMappingExtensions
         {
             Id = categorias.Id,
             Nome = categorias.Nome,
-            ImagemUrl= categorias.ImagemUrl
+            ImagemUrl = categorias.ImagemUrl
         }).ToList();
     }
 }
